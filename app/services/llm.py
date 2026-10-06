@@ -103,10 +103,10 @@ class OpenAILLMService(BaseLLMService):
         try:
             standalone = await self.generate_response(prompt, system_prompt=system_prompt)
             if standalone:
-                standalone = standalone.strip(' "\'\t\n')
+                standalone = standalone.strip(" \"'\t\n")
                 for prefix in ["Standalone Question:", "Standalone question:", "Question:", "Rewritten Question:"]:
                     if standalone.startswith(prefix):
-                        standalone = standalone[len(prefix) :].strip(' "\'\t\n')
+                        standalone = standalone[len(prefix) :].strip(" \"'\t\n")
             return standalone if standalone else query
         except Exception as e:
             logger.warning(f"Failed to rewrite query, using original: {e}")
@@ -294,8 +294,7 @@ class FallbackLLMService(BaseLLMService):
             except Exception as fallback_err:
                 logger.error(f"Fallback LLM also failed: {fallback_err}")
                 raise LLMProviderError(
-                    "All LLM providers are currently unavailable. "
-                    "Please try again later."
+                    "All LLM providers are currently unavailable. Please try again later."
                 ) from fallback_err
 
     async def rewrite_query(self, history: list[dict[str, str]], query: str) -> str:
@@ -333,6 +332,5 @@ class FallbackLLMService(BaseLLMService):
             except Exception as fallback_err:
                 logger.error(f"Fallback booking extraction also failed: {fallback_err}")
                 raise LLMProviderError(
-                    "All LLM providers are currently unavailable for booking extraction. "
-                    "Please try again later."
+                    "All LLM providers are currently unavailable for booking extraction. Please try again later."
                 ) from fallback_err

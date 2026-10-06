@@ -107,4 +107,3 @@ async def test_multi_turn_booking_in_progress(mock_redis: any) -> None:
     assert state2 is not None
     assert state2.name == "Alice Smith"
     assert state2.in_progress is True
-
